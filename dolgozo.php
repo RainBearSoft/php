@@ -21,10 +21,14 @@
             if(mysqli_num_rows($result) > 0) {
               while ($row = $result->fetch_assoc()) {
                 echo "SIKERESEN BELÉPTÉL: ".$row['emailCim']."(".$row['azonosito'].")";
+
+                $update = $mysql->connection->query('UPDATE dolgozo WHERE azonosito="'.$row["azonosito"].'" AND emailCim="'.$row["emailCim"].'" SET belepesDatuma=CURRENT_TIMESTAMP');
+
                 $_SESSION["azon"] = $row["azonosito"];
                 $_SESSION["email"] = $row["emailCim"];
                 $_SESSION["belepve"] = true;
 
+                header("Location: dolgozo_menu.html");
               }
             }else echo "Nincs ilyen: ".mysqli_num_rows($result);
           }else echo "üres";

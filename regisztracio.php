@@ -3,12 +3,12 @@
   $mysql = new Mysql();
 
   $email = $_POST["email"];
-  $azon = $_POST["azon"];
   $datum = $_POST["datum"];
   $nem = $_POST["nem"];
 
 
-  if(isset($email) && isset($azon) && isset($datum) && isset($nem)){
+  if(isset($email) && isset($datum) && isset($nem)){
+
     $result = $mysql->connection->query("SELECT azonosito FROM dolgozo WHERE emailCim='".$email."'");
     if(mysqli_num_rows($result) == 0) {
       $result = $mysql->connection->query("SELECT email, ajanloID FROM ajanlasok WHERE email='".$email."'");
@@ -16,10 +16,23 @@
         $meghivta = $mysql->fetch($result)[0]["ajanloID"];
         print_r($meghivta);
 
+
+        $idk = $mysql->fetch($mysql->connection->query("SELECT azonosito FROM dolgozo"));
+        $azon = "";
+        for ($i=1; $i <= 999; $i++) {
+          foreach($idk as $row) {
+            if($row["azonosito"] != "D_".$i) { $azon = "D_".$i; break; }
+          }
+
+          if($azon != "") break;
+        }
+
+        if($azon == "") die("Nincs több elérhető ID");
+
         echo "INSERT INTO dolgozo VALUES ('".$azon."', '".$datum."', '".$nem."', '".$meghivta."', '0000-00-00', '".$email."', 'A')";
         $insert = $mysql->connection->query("INSERT INTO dolgozo VALUES ('".$azon."', '".$datum."', '".$nem."', '".$meghivta."', NULL, '".$email."', 'A')");
         if($insert) {
-          echo "Sikeres regisztráció";
+          echo "Sikeres regisztráció, azonosító: ".$azon;
         }else echo "Sikertelen regisztráció";
       }
     }else echo "Van már ilyen felhasználó!";
@@ -39,8 +52,6 @@
   <form method="post" action="regisztracio.php">
     <p>E-Mail</p>
     <input type="text" name="email" />
-    <p>Azonosító</p>
-    <input type="text"name="azon" />
     <p>Születési idő:</p>
     <input type="date" name="datum" />
     <p>Neme:</p>
