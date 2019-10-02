@@ -3,8 +3,36 @@
   <head>
     <meta charset="utf-8">
     <title>Dolgozó belépés</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <style>
+      * { margin: 5px ; padding: 0;}
+      body {
+        font-family: Arial;
+        text-align: center;
+      }
+
+      button {
+        margin: 5px;
+        padding: 3px 10px;
+      }
+
+      #cont {
+        position: absolute;
+        width: 30%;
+        height: 30%;
+        z-index: 15;
+        top: 50%;
+        left: 50%;
+        margin: -15% 0 0 -15%;
+      }
+
+      input {
+        width:50%;
+      }
+    </style>
   </head>
   <body>
+    <div id="cont">
       <h1>Bejelentkezés</h1>
       <?php
         require 'mysql.php';
@@ -36,12 +64,16 @@
         }else echo "Üres";
       ?>
       <form method="post" action="dolgozo.php">
-        <p>E-Mail</p>
+        <p>E-Mail Cím:</p>
         <input type="text" name="email"/>
-        <p>Azonosító</p>
+        <br>
+        <p>Azonosító:</p>
         <input type="password" name="azon"/>
-        <button>Elküld</button>
+        <br/>
+        <button>Bejelentkezés</button>
       </form>
+      <p>vagy</p>
       <a href="regisztracio.php">Regisztráció</a>
+    </div>
   </body>
 </html>
