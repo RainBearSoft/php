@@ -46,8 +46,29 @@
 <head>
   <title>Dolgozói regisztráció</title>
   <meta charset="utf-8" />
+  <style>
+  body{background: url("https://cdn.pixabay.com/photo/2013/07/13/12/52/filmstripe-160520_960_720.png") repeat scroll -5vw 50px;
+      background-size: 400px auto;
+      transform: rotate("90deg");
+      }
+  #form1{
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 30px;
+    width: 30vw;
+    text-align: center;
+    margin: 0 auto;}
+  </style>
+  <script>
+  var posX = 50;
+    function bg(){
+      document.body.style.backgroundPosition= posX/2+Math.sin(posX)*10+"px "+posX+"px";
+      posX++;
+      setTimeout(bg,50);
+    }
+  </script>
 </head>
-<body>
+<body style="text-align: center" onload="bg()"><div id="form1">
   <h1>Regisztráció</h1>
   <form method="post" action="regisztracio.php">
     <p>E-Mail</p>
@@ -61,5 +82,6 @@
     <button>Regisztráció</button>
 
   </form>
+</div>
 </body>
 </html>
